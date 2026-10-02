@@ -25,6 +25,7 @@ def cargarCliente(tipo):
 def leerFichero(numCliente):
 
     cliente = Cliente(numCliente)
+    procesos=0
 
     try:
         with open(f"ficherosClientes/{numCliente}.txt", "r") as f:
@@ -41,15 +42,19 @@ def leerFichero(numCliente):
 
                 if destino == "Cuenta" and operacion == "Ingreso":
                     cliente.cuenta.ingresar(cantidad)
+                    procesos+=1
 
                 elif destino == "Cuenta" and operacion == "Retirada":
                     cliente.cuenta.retirar(cantidad)
+                    procesos += 1
 
                 elif destino == "Deposito" and operacion == "Ingreso":
                     cliente.deposito.ingresar(cantidad)
+                    procesos += 1
 
                 elif destino == "Deposito" and operacion == "Retirada":
                     cliente.deposito.retirar(cantidad)
+                    procesos += 1
                 else:
                     log.escribir("WARNING",
                                  f"movimiento ignorando en cliente {numCliente}:operacion {operacion} o destino: {destino} desconocido")
@@ -61,6 +66,9 @@ def leerFichero(numCliente):
         cliente.guardar()
 
         print("Datos del cliente cargados correctamente")
+        print(f"Movimientos procesados: {procesos}")
+        log.escribir( "INFO",f"Movimientos del cliente {numCliente} procesados: {procesos}")
+
         log.escribir(
             "INFO",
             f"Se han cargado los datos del cliente {cliente.getNumero()}"
