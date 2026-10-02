@@ -17,12 +17,19 @@ def menu():
             cargarCliente("movimientos")
 
         elif opt == "2":
-            cliente = cargarCliente("guardado")
-            log.escribir("INFO", f"CONSULTA DATOS CLIENTE CON NÚMERO: {cliente.numero}")
-            if cliente is not None:
-                print(f"Cliente: {cliente.numero}")
-                print(f"Saldo cuenta: {cliente.cuenta.saldo} €")
-                print(f"Saldo depósito: {cliente.deposito.saldo} €")
+            try:
+                cliente = cargarCliente("guardado")
+                log.escribir("INFO", f"CONSULTA DATOS CLIENTE CON NÚMERO: {cliente.numero}")
+                if cliente is not None:
+                    print(f"Cliente: {cliente.numero}")
+                    print(f"Saldo cuenta: {cliente.cuenta.saldo} €")
+                    print(f"Saldo depósito: {cliente.deposito.saldo} €")
+            except:
+                log.escribir(
+                    "ERROR",
+                    "Numero de cuenta no existente"
+                )
+                print("No existe un cliente con ese numero de cuenta")
 
         elif opt == "3":
             log.escribir(
