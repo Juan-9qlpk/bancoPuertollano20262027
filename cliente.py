@@ -66,6 +66,10 @@ def leerFichero(numCliente):
         cliente.guardar()
 
         print("Datos del cliente cargados correctamente")
+        print(f"Cliente: {cliente.getNumero()}\n" +
+              f"Saldo cuenta:  {float(cliente.getCuenta().getSaldo())}€\n" +
+              f"Saldo depósito: {float(cliente.getDeposito().getSaldo())}€\n")
+        
         print(f"Movimientos procesados: {procesos}")
         log.escribir( "INFO",f"Movimientos del cliente {numCliente} procesados: {procesos}")
 
