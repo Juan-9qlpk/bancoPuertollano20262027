@@ -1,5 +1,6 @@
 from models import Cliente
 from logs import Log
+import os
 
 log = Log()
 
@@ -69,7 +70,6 @@ def leerFichero(numCliente):
         print(f"Cliente: {cliente.getNumero()}\n" +
               f"Saldo cuenta:  {float(cliente.getCuenta().getSaldo())}€\n" +
               f"Saldo depósito: {float(cliente.getDeposito().getSaldo())}€\n")
-        
         print(f"Movimientos procesados: {procesos}")
         log.escribir( "INFO",f"Movimientos del cliente {numCliente} procesados: {procesos}")
 
@@ -110,3 +110,22 @@ def cargarClienteGuardado(numCliente):
         print("Primero tienes que cargar los datos de este cliente")
         return None
 
+def listarClientes():
+    print("Clientes cargados")
+    if not os.path.exists("datosClientes"):
+        print("No hay clientes cargados")
+        return
+
+    numeros = sorted(
+        nombre[:-4] for nombre in os.listdir("datosClientes")
+        if nombre.endswith(".txt")
+    )
+
+    if not numeros:
+        print("No hay clientes cargados")
+        return
+
+    for numero in numeros:
+        print(f"- {numero}")
+
+    print("")
