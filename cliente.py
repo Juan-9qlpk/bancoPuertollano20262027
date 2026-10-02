@@ -32,34 +32,39 @@ def leerFichero(numCliente):
         with open(f"ficherosClientes/{numCliente}.txt", "r") as f:
 
             linea = f.readline()
+            nlinea = 0
 
             while linea:
-
+                nlinea += 1
                 datos = linea.strip().split(";")
 
-                cantidad = float(datos[0])
-                operacion = datos[1]
-                destino = datos[2]
+                try:
+                    cantidad = float(datos[0])
+                    operacion = datos[1]
+                    destino = datos[2]
 
-                if destino == "Cuenta" and operacion == "Ingreso":
-                    cliente.cuenta.ingresar(cantidad)
-                    procesos+=1
+                    if destino == "Cuenta" and operacion == "Ingreso":
+                        cliente.cuenta.ingresar(cantidad)
+                        procesos+=1
 
-                elif destino == "Cuenta" and operacion == "Retirada":
-                    cliente.cuenta.retirar(cantidad)
-                    procesos += 1
+                    elif destino == "Cuenta" and operacion == "Retirada":
+                        cliente.cuenta.retirar(cantidad)
+                        procesos += 1
 
-                elif destino == "Deposito" and operacion == "Ingreso":
-                    cliente.deposito.ingresar(cantidad)
-                    procesos += 1
+                    elif destino == "Deposito" and operacion == "Ingreso":
+                        cliente.deposito.ingresar(cantidad)
+                        procesos += 1
 
-                elif destino == "Deposito" and operacion == "Retirada":
-                    cliente.deposito.retirar(cantidad)
-                    procesos += 1
-                else:
-                    log.escribir("WARNING",
-                                 f"movimiento ignorando en cliente {numCliente}:operacion {operacion} o destino: {destino} desconocido")
+                    elif destino == "Deposito" and operacion == "Retirada":
+                        cliente.deposito.retirar(cantidad)
+                        procesos += 1
 
+                    else:
+                        log.escribir("WARNING",
+                                     f"movimiento ignorando en cliente {numCliente}:operacion {operacion} o destino: {destino} desconocido")
+                except (ValueError, IndexError):
+                    log.escribir("ERROR",
+                                 f"Movimiento ignorado debido a cantidad inapropiada en cliente {numCliente} en la linea {nlinea}")
 
                 linea = f.readline()
 
