@@ -44,6 +44,8 @@ log/
 # =========================
 datosClientes/
 datosClientes/*.txt
+ficherosClientes/
+ficherosClientes/*.txt
 # =========================
 # Testing
 # =========================
