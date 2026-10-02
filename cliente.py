@@ -6,6 +6,10 @@ log = Log()
 def cargarCliente(tipo):
     while True:
         num = input("Introduce el número de cliente: ")
+        log.escribir(
+            "INFO",
+            f"Se está intentando cargar el cliente {num}"
+        )
 
         if len(num) != 6 or not num.isdigit():
             print("El formato introducido no es correcto")
@@ -65,10 +69,18 @@ def leerFichero(numCliente):
         print(f"Movimientos procesados: {procesos}")
         log.escribir( "INFO",f"Movimientos del cliente {numCliente} procesados: {procesos}")
 
+        log.escribir(
+            "INFO",
+            f"Se han cargado los datos del cliente {cliente.getNumero()}"
+        )
         return cliente
 
     except FileNotFoundError:
         print("El usuario no tiene ninguna cuenta con el banco")
+        log.escribir(
+            "ERROR",
+            f"Fichero de movimientos inexistente"
+        )
         return None
 
 
@@ -84,7 +96,10 @@ def cargarClienteGuardado(numCliente):
 
             cliente.cuenta.saldo = float(datos[1])
             cliente.deposito.saldo = float(datos[2])
-
+            log.escribir(
+                "INFO",
+                f"Se han cargado las cuentas del {cliente.getNumero()}"
+            )
             return cliente
 
     except FileNotFoundError:
