@@ -24,47 +24,49 @@ def cargarCliente(tipo):
 
 
 def leerFichero(numCliente):
-
     cliente = Cliente(numCliente)
-    procesos=0
+    procesos = 0
 
     try:
         with open(f"ficherosClientes/{numCliente}.txt", "r") as f:
 
             linea = f.readline()
-            nlinea = 0
+            nLinea = 0
 
             while linea:
-                nlinea += 1
+                nLinea += 1
                 datos = linea.strip().split(";")
 
-                try:
-                    cantidad = float(datos[0])
-                    operacion = datos[1]
-                    destino = datos[2]
+                for i in range(0, len(datos) - 1, 3):
+                    try:
 
-                    if destino == "Cuenta" and operacion == "Ingreso":
-                        cliente.cuenta.ingresar(cantidad)
-                        procesos+=1
+                        cantidad = float(datos[i])
+                        operacion = datos[i + 1]
+                        destino = datos[i + 2]
 
-                    elif destino == "Cuenta" and operacion == "Retirada":
-                        cliente.cuenta.retirar(cantidad)
-                        procesos += 1
+                        if destino == "Cuenta" and operacion == "Ingreso":
+                            cliente.cuenta.ingresar(cantidad)
+                            procesos += 1
 
-                    elif destino == "Deposito" and operacion == "Ingreso":
-                        cliente.deposito.ingresar(cantidad)
-                        procesos += 1
+                        elif destino == "Cuenta" and operacion == "Retirada":
+                            cliente.cuenta.retirar(cantidad)
+                            procesos += 1
 
-                    elif destino == "Deposito" and operacion == "Retirada":
-                        cliente.deposito.retirar(cantidad)
-                        procesos += 1
+                        elif destino == "Deposito" and operacion == "Ingreso":
+                            cliente.deposito.ingresar(cantidad)
+                            procesos += 1
 
-                    else:
-                        log.escribir("WARNING",
-                                     f"movimiento ignorando en cliente {numCliente}:operacion {operacion} o destino: {destino} desconocido")
-                except (ValueError, IndexError):
-                    log.escribir("ERROR",
-                                 f"Movimiento ignorado debido a cantidad inapropiada en cliente {numCliente} en la linea {nlinea}")
+                        elif destino == "Deposito" and operacion == "Retirada":
+                            cliente.deposito.retirar(cantidad)
+                            procesos += 1
+
+                        else:
+                            log.escribir("WARNING",
+                                         f"movimiento ignorando en cliente {numCliente}:operacion {operacion} o destino: {destino} desconocido")
+
+                    except (ValueError, IndexError):
+                        log.escribir("ERROR",
+                                     f"Movimiento ignorado debido a cantidad inapropiada en cliente {numCliente} en la linea {nLinea}")
 
                 linea = f.readline()
 
@@ -75,8 +77,9 @@ def leerFichero(numCliente):
         print(f"Cliente: {cliente.getNumero()}\n" +
               f"Saldo cuenta:  {float(cliente.getCuenta().getSaldo())}€\n" +
               f"Saldo depósito: {float(cliente.getDeposito().getSaldo())}€\n")
+
         print(f"Movimientos procesados: {procesos}")
-        log.escribir( "INFO",f"Movimientos del cliente {numCliente} procesados: {procesos}")
+        log.escribir("INFO", f"Movimientos del cliente {numCliente} procesados: {procesos}")
 
         log.escribir(
             "INFO",
