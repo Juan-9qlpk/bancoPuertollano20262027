@@ -68,10 +68,11 @@ def leerFichero(numCliente):
                         log.escribir("ERROR",
                                      f"Movimiento ignorado debido a cantidad inapropiada en cliente {numCliente} en la linea {nLinea}")
 
-                linea = f.readline()
+             
 
         # Guardamos el estado final del cliente
         cliente.guardar()
+
 
         print("Datos del cliente cargados correctamente")
         print(f"Cliente: {cliente.getNumero()}\n" +
@@ -101,13 +102,14 @@ def cargarClienteGuardado(numCliente):
     try:
         with open(f"datosClientes/{numCliente}.txt", "r") as f:
 
-            linea = f.readline()
-            datos = linea.split(";")
+            numero = f.readline().strip()
+            saldoCuenta = float(f.readline().strip())
+            saldoDeposito = float(f.readline().strip())
 
-            cliente = Cliente(datos[0])
+            cliente = Cliente(numero)
 
-            cliente.cuenta.saldo = float(datos[1])
-            cliente.deposito.saldo = float(datos[2])
+            cliente.cuenta.saldo = saldoCuenta
+            cliente.deposito.saldo = saldoDeposito
             log.escribir(
                 "INFO",
                 f"Se han cargado las cuentas del {cliente.getNumero()}"
@@ -117,6 +119,7 @@ def cargarClienteGuardado(numCliente):
     except FileNotFoundError:
         print("Primero tienes que cargar los datos de este cliente")
         return None
+
 
 def listarClientes():
     print("Clientes cargados")
@@ -137,3 +140,4 @@ def listarClientes():
         print(f"- {numero}")
 
     print("")
+
