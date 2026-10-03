@@ -68,7 +68,7 @@ def leerFichero(numCliente):
                         log.escribir("ERROR",
                                      f"Movimiento ignorado debido a cantidad inapropiada en cliente {numCliente} en la linea {nLinea}")
 
-             
+                linea = f.readline()
 
         # Guardamos el estado final del cliente
         cliente.guardar()
