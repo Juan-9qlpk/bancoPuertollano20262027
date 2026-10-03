@@ -43,7 +43,9 @@ log/
 # Datos generados
 # =========================
 datosClientes/
-
+datosClientes/*.txt
+ficherosClientes/
+ficherosClientes/*.txt
 # =========================
 # Testing
 # =========================

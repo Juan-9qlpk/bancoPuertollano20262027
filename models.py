@@ -46,13 +46,16 @@ class Cliente:
     def getDeposito(self):
         return self.deposito
 
+    def getSaldoTotal(self):
+        return self.cuenta.getSaldo() + self.deposito.getSaldo()
+
     def guardar(self):
         if not os.path.exists("datosClientes"):
             os.mkdir("datosClientes")
 
         with open(f"datosClientes/{self.numero}.txt", "w") as f:
             f.write(
-                f"{self.numero};"
-                f"{self.cuenta.getSaldo()};"
-                f"{self.deposito.getSaldo()}"
+                f"{self.numero}\n"
+                f"{self.cuenta.getSaldo()}\n"
+                f"{self.deposito.getSaldo()}\n"
             )
